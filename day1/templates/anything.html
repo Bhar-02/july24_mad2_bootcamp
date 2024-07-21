@@ -8,6 +8,9 @@
 <body>
     <h1>hello world</h1>
     <p>{{ var2 }}</p>
+    {% for i in user %}
+    <p>{{i.name}}, {{i.desc}}</p>
+    {% endfor %}
     <form action="/hello_world" method="post">
         <input type="text" name="name" id="name" placeholder="name field">
         <input type="text" name="desc" id="desc" placeholder="desc field">
