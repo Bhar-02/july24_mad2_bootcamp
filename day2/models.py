@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 
-from flask_security import UserMixin, RoleMixin, AsaList
+from flask_security import UserMixin, RoleMixin, AsaList, SQLAlchemyUserDatastore
 
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.mutable import MutableList
@@ -12,9 +12,9 @@ db = SQLAlchemy()
 
 class RolesUsers(db.Model):
     __tablename__ = 'roles_users'
-    id = Column(Integer(), primary_key=True)
-    user_id = Column('user_id', Integer(), ForeignKey('user.id'))
-    role_id = Column('role_id', Integer(), ForeignKey('role.id'))
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column('user_id', db.Integer(), db.ForeignKey('user.id'))
+    role_id = db.Column('role_id', db.Integer(), db.ForeignKey('role.id'))
 
 class Role(db.Model, RoleMixin):
     __tablename__ = 'role'
@@ -39,3 +39,6 @@ class User(db.Model, UserMixin):
     confirmed_at = Column(DateTime())
     roles = relationship('Role', secondary='roles_users',
                          backref=backref('users', lazy='dynamic'))
+    
+
+user_datastore = SQLAlchemyUserDatastore(db, User, Role)
