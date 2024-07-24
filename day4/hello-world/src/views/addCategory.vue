@@ -1,7 +1,7 @@
 <template>
     <form>
-        <input type="text" name="name" id="name" placeholder="name field" v-model="this.name">
-        <input type="text" name="desc" id="desc" placeholder="desc field" v-model="this.desc">
+        <input type="text" placeholder="name field" v-model="this.name">
+        <input type="text" placeholder="desc field" v-model="this.desc">
         <button type="button" @click="printonconsole">add category</button>
     </form>
     <h1>{{ this.name }}

@@ -31,7 +31,8 @@ api_handler.add_resource(activateManager, '/activate')
 @app.route('/test', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def testMethod():
     if request.method == 'GET':
-        print("my name")
+        var12 = "hello world"
+        print("my name", var12)
         return jsonify({"message":"GET Test successful"})
     elif request.method == 'POST':
         return jsonify({"message":"POST Test successful"})
