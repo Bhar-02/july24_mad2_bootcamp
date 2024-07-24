@@ -12,6 +12,9 @@ def create_app():
 
     from flask_restful import Api
     api = Api(app1, prefix='/api')
+
+    from flask_cors import CORS
+    CORS(app1)
     return app1, api
 
 app, api_handler = create_app()
@@ -35,7 +38,8 @@ def testMethod():
         print("my name", var12)
         return jsonify({"message":"GET Test successful"})
     elif request.method == 'POST':
-        return jsonify({"message":"POST Test successful"})
+        data = request.get_json()
+        return jsonify({"message":"POST Test successful", "data_got": data})
     elif request.method == 'PUT':
         return jsonify({"message":"PUT Test successful"})
     elif request.method == 'DELETE':
