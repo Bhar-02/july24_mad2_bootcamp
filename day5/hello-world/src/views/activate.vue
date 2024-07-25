@@ -1,10 +1,12 @@
 <template>
-    <h1>login page</h1>
     <form>
-        <input type="text" placeholder="email" v-model="this.name">
-        <input type="text" placeholder="password" v-model="this.desc">
+        <input type="number" placeholder="name field" v-model="this.name">
         <button type="button" @click="AddCategoryfn">add category</button>
     </form>
+    <h1>{{ this.name }}
+    {{ this.desc }}</h1>
+
+    <p>{{ token }}</p>
     <p>{{ var12 }}</p>
     
 
@@ -14,12 +16,19 @@
 // from flask_restful import Resource
 import axios from 'axios';
 export default {
-    name: 'loginview',
+    name: 'activate',
     data() {
         return {
             name: null,
             desc: null,
-            var12: null
+            var12: null,
+            token: null
+        }
+    },
+    created() {
+        this.token = localStorage.getItem('authToken')
+        if (!this.token) {
+            this.$router.push('/login')
         }
     },
     methods: {
@@ -29,18 +38,16 @@ export default {
     },
     AddCategoryfn(){
         axios
-            .post('http://localhost:5000/api/login', {
-                email: this.name,
-                password: this.desc
-            })
+            .post('http://localhost:5000/api/activate', {
+                id: this.name,
+                desc: this.desc
+            }, {headers: {Authorization: `${this.token}`}})
             .then(response => {
                 console.log("response block", response)
                 if (response.status == 200) {
                     this.var12 = response.data
                     this.name = null
                     this.desc = null
-                    localStorage.setItem('authToken', response.data.authToken)
-                    this.$router.push('/activate')
                 }
             })
             .catch(error => {
