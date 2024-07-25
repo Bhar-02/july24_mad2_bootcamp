@@ -31,4 +31,4 @@ class login(Resource):
         if user:
             from flask_security.utils import verify_password
             if verify_password(password1, user.password):
-                return jsonify({"message":"Login successful", "authToken": user.get_auth_token()})
+                return jsonify({"message":"Login successful", "authToken": user.get_auth_token(), "role":user.roles[0].name})
