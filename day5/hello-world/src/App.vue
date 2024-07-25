@@ -1,6 +1,7 @@
 <template>
 <nav>
   <router-link to="/">Home</router-link> |
+  <router-link :to="{name:'addCategory'}">addcate</router-link> |
   <router-link to="/login">login</router-link> |
   <router-link to="/activate">activate</router-link> |
   <a @click="logoutfn">logout</a> |

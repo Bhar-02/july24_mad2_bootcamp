@@ -7,7 +7,7 @@ import activate from '../views/activate.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'home',
     component: HomeView
   },
@@ -21,7 +21,18 @@ const routes = [
   },
   {
     path: '/addCategory',
+    name: 'addCategory',
     component: AddCategory
+  },
+  {
+    path: '/editCategory/:bootcampId',
+    name: 'editCategory',
+    component: () => import('@/views/editCategory.vue')
+  },
+  {
+    path: '/',
+    name: 'adminDash',
+    component: () => import('@/views/adminDashboard.vue')
   },
   {
     path: '/activate',

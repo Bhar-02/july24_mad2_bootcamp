@@ -30,6 +30,14 @@ api_handler.add_resource(login, '/login')
 from routes.admin import activateManager
 api_handler.add_resource(activateManager, '/activate')
 
+from routes.category import CategoryResource, CategorySpecific
+api_handler.add_resource(CategoryResource, '/category')
+api_handler.add_resource(CategorySpecific, '/category/<int:id>')
+
+
+from routes.product import ProductResource, ProductSpecific
+api_handler.add_resource(ProductResource, '/product')
+api_handler.add_resource(ProductSpecific, '/product/<int:id>')
 
 @app.route('/test', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def testMethod():
@@ -74,7 +82,7 @@ def test():
 
 @app.route('/hello_world', methods=['GET'])
 def hello_world():
-    return jsonify({"message":"Hello World"})
+    return jsonify({"message":"Hello World"}), 900
 
 
 if __name__ == "__main__":

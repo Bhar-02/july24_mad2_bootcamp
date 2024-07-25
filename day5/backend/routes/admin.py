@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 from flask_security import roles_accepted, auth_token_required
 
 from models import db, user_datastore
@@ -15,4 +15,4 @@ class activateManager(Resource):
             user_datastore.activate_user(user)
             db.session.commit()
             return jsonify({"message":"User activated successfully"})
-        return jsonify({"message":"User not found"})
+        return make_response(jsonify({"message":"User not found"}), 404)
