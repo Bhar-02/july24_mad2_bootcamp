@@ -4,11 +4,13 @@ from datetime import datetime
 from flask_security import roles_accepted, current_user
 
 from models import db, Product
+import os
 
 class ProductResource(Resource):
     @roles_accepted('admin', 'manager')
     def post(self):
-        data = request.get_json()
+        # data = request.get_json()
+        data = request.form
         name = data['name']
         if not name:
             return jsonify({"message": "name is required"})
@@ -25,14 +27,35 @@ class ProductResource(Resource):
         if not category_id:
             return jsonify({"message": "category_id is required"})
         
+        print(name, description, price, stock, category_id)
+
+        image = request.files['img']
+        print(image)
+
+        if not image:
+            return jsonify({"message": "image is required"})
+        
+
+
 
         # if current_user.has_role('admin'):
         product = Product(name=name, description=description, price=price, stock=stock, category_id=category_id, created_by=current_user.id)
         db.session.add(product)
         db.session.commit()
-        return make_response(jsonify({"message": "category created successfully", "id": product.id, "name": product.name}), 201)
+        # db.session.flush()
+        prodId = product.id
+        filename = f"{prodId}.jpg"
+        print(filename)
 
+        storage_path = os.path.join(os.getcwd(), 'prodImg', filename)
+        print(storage_path)
+
+        image.save(storage_path)
+        return make_response(jsonify({"message": "product created successfully", "id": prodId, "name": product.name}), 201)
+
+    from caching import cache
     @roles_accepted('admin', 'manager', 'customer')
+    @cache.cached(timeout=20)
     def get(self):
         products = Product.query.all()
         data = [product.serialize() for product in products]

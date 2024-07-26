@@ -21,7 +21,7 @@
                 <td>{{ row.delete }}</td>
                 <td><router-link :to="{name: 'editCategory', params: {bootcampId: row.id}}">edit</router-link> 
                     | 
-                    <a @click="deleteCategory(row.id)" v-if="row.delete"> delete</a>
+                    <a @click="deleteCategory(row.id)" v-if="!row.delete"> delete</a>
                 </td>
             </tr>
         </tbody>
@@ -42,7 +42,7 @@
             <td>{{ row.name }}</td>
             <td>{{ row.description }}</td>
             <td>{{ row.status }}</td>
-            <td></td>
+            <td><img :src="`http://localhost:8000/${row.id}.jpg`" height="20" width="20"  alt="prod img"></td>
             </tr>
         </tbody>
     </table>

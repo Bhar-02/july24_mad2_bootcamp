@@ -1,0 +1,10 @@
+1. redis-server     (gui for redis-server is redis insight, you can install it in windows, because will access the redis-server using the api)
+sudo apt install redis-server
+to start is --- redis-server   , if are on the terminal to close it ctrl+c, if not sudo service redis-server stop
+
+
+2. mailhog    (dependecy, we have to install golang)  https://github.com/mailhog/MailHog
+sudo apt-get -y install golang-go
+go install github.com/mailhog/MailHog@latest
+
+to start it ---- ~/go/bin/MailHog, ctrl+c

@@ -25,8 +25,10 @@ class CategoryResource(Resource):
         db.session.commit()
         return make_response(jsonify({"message": "category created successfully", "id": cate.id, "name": cate.name, "status": cate.status}), 201)
 
+    from caching import cache
     @auth_token_required
     @roles_accepted('admin', 'manager', 'customer')
+    @cache.cached(timeout=30)
     def get(self):
         category = Category.query.all()
         data = [categories.formater() for categories in category]
